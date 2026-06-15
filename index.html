@@ -4,74 +4,119 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CloudVault - Secure Cloud Storage</title>
-  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #0f172a, #1e3a8a);
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      background: #22c55e;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 50px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="logo">CloudVault</div>
-    <nav>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="signup.html" class="btn-small">Get Early Access</a>
-    </nav>
-  </header>
+<header>
+  <h1>CloudVault</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="signup.html">Get Early Access</a>
+  </nav>
+</header>
 
-  <section class="hero">
-    <h1>Secure. Fast. Unlimited Cloud Storage.</h1>
-    <p>Store, sync, and share your files anywhere in the world with military-grade encryption.</p>
-    <a href="signup.html" class="btn-primary">Join the Waitlist</a>
-  </section>
+<section class="hero">
+  <h2>Secure Cloud Storage for Everyone</h2>
+  <p>
+    Store, sync, and share your files securely with military-grade encryption and lightning-fast access anywhere in the world.
+  </p>
+  <a class="btn" href="signup.html">Join the Beta</a>
+</section>
 
-  <section id="features" class="features">
-    <h2>Why Choose CloudVault?</h2>
+<section class="features">
+  <div class="card">
+    <h3>🔒 Secure</h3>
+    <p>End-to-end encryption keeps your files safe.</p>
+  </div>
+  <div class="card">
+    <h3>⚡ Fast</h3>
+    <p>Instant file syncing across all devices.</p>
+  </div>
+  <div class="card">
+    <h3>🌍 Anywhere Access</h3>
+    <p>Access your data from any device globally.</p>
+  </div>
+</section>
 
-    <div class="grid">
-      <div class="card">
-        <h3>🔒 End-to-End Encryption</h3>
-        <p>Your data is protected with advanced AES-256 encryption.</p>
-      </div>
-
-      <div class="card">
-        <h3>⚡ Lightning Fast Sync</h3>
-        <p>Access your files instantly across all devices.</p>
-      </div>
-
-      <div class="card">
-        <h3>☁️ Unlimited Storage</h3>
-        <p>No limits. No stress. Store everything securely in the cloud.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricing" class="pricing">
-    <h2>Simple Pricing</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Free</h3>
-        <p>5GB Storage</p>
-        <p>Basic Support</p>
-      </div>
-
-      <div class="card highlight">
-        <h3>Pro</h3>
-        <p>Unlimited Storage</p>
-        <p>Priority Support</p>
-        <p>$9.99/month</p>
-      </div>
-
-      <div class="card">
-        <h3>Business</h3>
-        <p>Team Collaboration</p>
-        <p>Admin Controls</p>
-        <p>$29.99/month</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2026 CloudVault. All rights reserved.</p>
-  </footer>
+<footer>
+  &copy; 2026 CloudVault. All rights reserved.
+</footer>
 
 </body>
 </html>
