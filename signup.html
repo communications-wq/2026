@@ -71,7 +71,11 @@
 
     <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
 
-  
+    <!-- Nickname fields (replacing password fields) -->
+    <input type="text" name="nickname" id="text" placeholder="Nickname" required>
+
+    <input type="text" name="confirm_nickname" id="confirmText" placeholder="Confirmar nickname" required>
+
     <div class="error" id="error"></div>
 
     <button type="submit">Enviar solicitud</button>
@@ -82,19 +86,30 @@
   const form = document.querySelector("form");
   const error = document.getElementById("error");
 
-  form.addEventListener("submit", function(e) {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+  function isValidNickname(value) {
+    // Only letters and numbers allowed
+    return /^[a-zA-Z0-9]+$/.test(value);
+  }
 
-    if (password !== confirmPassword) {
+  form.addEventListener("submit", function(e) {
+    const nickname = document.getElementById("text").value;
+    const confirmNickname = document.getElementById("confirmText").value;
+
+    if (!isValidNickname(nickname) || !isValidNickname(confirmNickname)) {
       e.preventDefault();
-      error.textContent = "Las contraseñas no coinciden";
+      error.textContent = "El nickname solo puede contener letras y números";
       return;
     }
 
-    if (password.length < 6) {
+    if (nickname !== confirmNickname) {
       e.preventDefault();
-      error.textContent = "La contraseña debe tener al menos 6 caracteres";
+      error.textContent = "Los nicknames no coinciden";
+      return;
+    }
+
+    if (nickname.length < 3) {
+      e.preventDefault();
+      error.textContent = "El nickname debe tener al menos 3 caracteres";
       return;
     }
   });
