@@ -90,13 +90,13 @@
 
     if (password !== confirmPassword) {
       e.preventDefault();
-      error.textContent = "Passwords do not match!";
+      error.textContent = "Las contraseñas no coinciden!";
       return;
     }
 
     if (password.length < 6) {
       e.preventDefault();
-      error.textContent = "Password must be at least 6 characters.";
+      error.textContent = "La contraseña debe tener al menos 6 caracteres..";
       return;
     }
 
