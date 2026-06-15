@@ -52,8 +52,9 @@
     }
 
     .error {
-      color: red;
+      color: #ff6b6b;
       font-size: 12px;
+      margin-top: 5px;
     }
   </style>
 </head>
@@ -63,11 +64,15 @@
 <div class="form-container">
   <h2>Get Early Access</h2>
 
-  <form id="signupForm">
-    <input type="text" id="name" placeholder="Full Name" required />
-    <input type="email" id="email" placeholder="Email Address" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+  <form id="signupForm" action="https://formspree.io/f/xlgkzdww" method="POST">
+
+    <input type="text" name="name" id="name" placeholder="Full Name" required />
+
+    <input type="email" name="email" id="email" placeholder="Email Address" required />
+
+    <input type="password" name="password" id="password" placeholder="Password" required />
+
+    <input type="password" name="confirm_password" id="confirmPassword" placeholder="Confirm Password" required />
 
     <div class="error" id="error"></div>
 
@@ -80,31 +85,22 @@
   const error = document.getElementById("error");
 
   form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
     if (password !== confirmPassword) {
+      e.preventDefault();
       error.textContent = "Passwords do not match!";
       return;
     }
 
     if (password.length < 6) {
+      e.preventDefault();
       error.textContent = "Password must be at least 6 characters.";
       return;
     }
 
-    // Simulate saving data (you could send to backend here)
-    localStorage.setItem("cloudUser", JSON.stringify({
-      name,
-      email
-    }));
-
-    // Redirect to thank you page
-    window.location.href = "thankyou.html";
+    // allow Formspree submission if valid
   });
 </script>
 
