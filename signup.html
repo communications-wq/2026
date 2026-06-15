@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join CloudVault Beta</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #22c55e;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <h2>Get Early Access</h2>
+
+  <form id="signupForm">
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="email" id="email" placeholder="Email Address" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+
+    <div class="error" id="error"></div>
+
+    <button type="submit">Submit Interest</button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById("signupForm");
+  const error = document.getElementById("error");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+      error.textContent = "Passwords do not match!";
+      return;
+    }
+
+    if (password.length < 6) {
+      error.textContent = "Password must be at least 6 characters.";
+      return;
+    }
+
+    // Simulate saving data (you could send to backend here)
+    localStorage.setItem("cloudUser", JSON.stringify({
+      name,
+      email
+    }));
+
+    // Redirect to thank you page
+    window.location.href = "thankyou.html";
+  });
+</script>
+
+</body>
+</html>
