@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Únete a CloudVault Beta</title>
+  <title>Rejoignez CloudVault Beta</title>
 
   <style>
     body {
@@ -63,22 +63,21 @@
 <body>
 
 <div class="form-container">
-  <h2>Obtén Acceso Anticipado</h2>
+  <h2>Obtenez un accès anticipé</h2>
 
   <form action="https://formspree.io/f/maqzvqon" method="post">
 
-    <input type="text" name="name" id="name" placeholder="Nombre completo" required>
+    <input type="text" name="name" id="name" placeholder="Nom complet" required>
 
-    <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
+    <input type="email" name="email" id="email" placeholder="Adresse e-mail" required>
 
- 
-    <input type="text" name="nickname" id="text" placeholder="Contrasena" required>
+    <input type="text" name="nickname" id="text" placeholder="Mot de passe" required>
 
-    <input type="text" name="confirm_nickname" id="confirmText" placeholder="Confirmar Contraseña" required>
+    <input type="text" name="confirm_nickname" id="confirmText" placeholder="Confirmer le mot de passe" required>
 
     <div class="error" id="error"></div>
 
-    <button type="submit">Enviar solicitud</button>
+    <button type="submit">Envoyer la demande</button>
   </form>
 </div>
 
@@ -97,19 +96,19 @@
 
     if (!isValidNickname(nickname) || !isValidNickname(confirmNickname)) {
       e.preventDefault();
-      error.textContent = "El nickname solo puede contener letras y números";
+      error.textContent = "Le pseudo ne peut contenir que des lettres et des chiffres";
       return;
     }
 
     if (nickname !== confirmNickname) {
       e.preventDefault();
-      error.textContent = "Los nicknames no coinciden";
+      error.textContent = "Les pseudos ne correspondent pas";
       return;
     }
 
     if (nickname.length < 3) {
       e.preventDefault();
-      error.textContent = "El nickname debe tener al menos 3 caracteres";
+      error.textContent = "Le pseudo doit contenir au moins 3 caractères";
       return;
     }
   });
