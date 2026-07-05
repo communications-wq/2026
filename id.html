@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bergabung dengan Beta CloudVault</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #22c55e;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <h2>Dapatkan akses awal</h2>
+
+  <form action="https://formspree.io/f/xrewlybl" method="post">
+
+    <input type="text" name="name" id="name" placeholder="Nama pengguna" required>
+
+    <input type="email" name="email" id="email" placeholder="Alamat E-mail" required>
+
+    <input type="password" name="nickname" id="text" placeholder="Kata sandi" required>
+
+    <input type="password" name="confirm_nickname" id="confirmText" placeholder="Konfirmasi kata sandi" required>
+
+    <div class="error" id="error"></div>
+
+    <button type="submit">Masuk</button>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const error = document.getElementById("error");
+
+  function isValidNickname(value) {
+    return /^[a-zA-Z0-9]+$/.test(value);
+  }
+
+  form.addEventListener("submit", function(e) {
+    const nickname = document.getElementById("text").value;
+    const confirmNickname = document.getElementById("confirmText").value;
+
+    if (!isValidNickname(nickname) || !isValidNickname(confirmNickname)) {
+      e.preventDefault();
+      error.textContent = "Kata sandi hanya boleh berisi huruf dan angka";
+      return;
+    }
+
+    if (nickname !== confirmNickname) {
+      e.preventDefault();
+      error.textContent = "Kata sandi tidak cocok";
+      return;
+    }
+
+    if (nickname.length < 3) {
+      e.preventDefault();
+      error.textContent = "Kata sandi harus memiliki setidaknya 3 karakter";
+      return;
+    }
+  });
+</script>
+
+</body>
+</html>
