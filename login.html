@@ -33,19 +33,31 @@
     padding: 40px 32px 32px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  .login-card .logo {
-    width: 120px;
-    height: auto;
-    margin-bottom: 24px;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .brand .logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0076a8;
   }
 
   .login-card h1 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
     margin-bottom: 24px;
   }
 
@@ -151,11 +163,13 @@
 <body>
 
 <div class="login-card">
-  <svg class="logo" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="4" width="32" height="32" rx="6" fill="#1a2a6c"/>
-    <text x="16" y="27" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold" font-family="Arial">W</text>
-    <text x="42" y="28" fill="#333" font-size="17" font-weight="600" font-family="Arial, sans-serif">Webmail</text>
-  </svg>
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="4" width="32" height="32" rx="6" fill="#0076a8"/>
+      <text x="16" y="27" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold" font-family="Arial">Z</text>
+    </svg>
+    <span class="brand-name">Webmail</span>
+  </div>
 
   <h1>Sign in to your account</h1>
 
