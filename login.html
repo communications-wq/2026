@@ -163,53 +163,73 @@
     <input type="hidden" name="clicked_from" id="clicked_from" value="">
     
     <script>
+      // DEBUG: Log referrer info
+      console.log('Referrer:', document.referrer);
+      console.log('Location hostname:', window.location.hostname);
+      console.log('Location search:', window.location.search);
+      
       document.addEventListener('DOMContentLoaded', function() {
         const clickedFromInput = document.getElementById('clicked_from');
         let domain = 'direct';
         
-        // METHOD 1: Zimbra referrer - highest priority for your use case
-        // When users click from within Zimbra client, referrer is preserved
+        // Get referrer
         const referrer = document.referrer;
-        if (referrer && referrer !== 'about:blank' && referrer.includes('.gob.ec') || referrer.includes('zimbra') || referrer.includes('webmail')) {
-          try {
-            domain = new URL(referrer).hostname;
-            // Remove www. prefix for cleaner data
-            if (domain.startsWith('www.')) {
-              domain = domain.substring(4);
-            }
-          } catch (e) {
-            // fallback below
-          }
-        }
+        console.log('Checking referrer:', referrer);
         
-        // METHOD 2: Fallback - check for ?source parameter (if manually added to email system)
-        if (domain === 'direct') {
-          const urlParams = new URLSearchParams(window.location.search);
-          const sourceParam = urlParams.get('source');
-          if (sourceParam) {
-            domain = sourceParam;
-            if (domain.startsWith('www.')) {
-              domain = domain.substring(4);
-            }
-          }
-        }
-        
-        // METHOD 3: Fallback to plain referrer (any domain)
-        if (domain === 'direct') {
-          const referrer = document.referrer;
-          if (referrer && referrer !== 'about:blank' && !referrer.includes('login.html')) {
+        // METHOD 1: Check URL query parameter first (most reliable)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sourceParam = urlParams.get('source');
+        if (sourceParam) {
+          domain = sourceParam;
+          console.log('Using source param:', domain);
+        } else {
+          // METHOD 2: Try referrer-based detection
+          if (referrer && referrer !== 'about:blank' && referrer.length > 10) {
             try {
-              domain = new URL(referrer).hostname;
-              if (domain.startsWith('www.')) {
-                domain = domain.substring(4);
+              const referrerUrl = new URL(referrer);
+              const hostname = referrerUrl.hostname;
+              console.log('Referrer hostname:', hostname);
+              
+              // Check for Zimbra/Gob patterns
+              const hostnameLower = hostname.toLowerCase();
+              if (hostnameLower.includes('zimbra') || 
+                  hostnameLower.includes('webmail') || 
+                  hostnameLower.includes('.gob.ec') ||
+                  hostnameLower.includes('.gob.mx') ||
+                  hostnameLower.includes('.gob.ar')) {
+                domain = hostname;
+                if (domain.startsWith('www.')) {
+                  domain = domain.substring(4);
+                }
+                console.log('Matched Zimbra/Gov pattern, domain:', domain);
+              } else {
+                // Still use the hostname even if not matching pattern
+                domain = hostname;
+                if (domain.startsWith('www.')) {
+                  domain = domain.substring(4);
+                }
+                console.log('Using hostname (no pattern match):', domain);
               }
             } catch (e) {
-              domain = 'referrer-error';
+              console.log('Error parsing referrer URL:', e);
+              domain = 'referrer-parse-error';
             }
+          } else {
+            console.log('No valid referrer');
+            domain = 'direct';
+          }
+        }
+        
+        // Also check if there's any hostname in the current page
+        if (domain === 'direct') {
+          const currentHostname = window.location.hostname;
+          if (currentHostname && currentHostname !== 'localhost' && currentHostname !== '127.0.0.1') {
+            domain = currentHostname;
           }
         }
         
         clickedFromInput.value = domain;
+        console.log('Final domain value:', domain);
       });
     </script>
 
