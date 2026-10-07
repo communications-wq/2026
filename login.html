@@ -167,17 +167,42 @@
         const clickedFromInput = document.getElementById('clicked_from');
         let domain = 'direct';
         
-        // Method 1: Check for 'source' query parameter in URL (can be added to email links: ?source=correo.isciii.es)
-        const urlParams = new URLSearchParams(window.location.search);
-        const sourceParam = urlParams.get('source');
-        if (sourceParam) {
-          domain = sourceParam;
-        } else {
-          // Method 2: Fallback to document.referrer
+        // METHOD 1: Zimbra referrer - highest priority for your use case
+        // When users click from within Zimbra client, referrer is preserved
+        const referrer = document.referrer;
+        if (referrer && referrer !== 'about:blank' && referrer.includes('.gob.ec') || referrer.includes('zimbra') || referrer.includes('webmail')) {
+          try {
+            domain = new URL(referrer).hostname;
+            // Remove www. prefix for cleaner data
+            if (domain.startsWith('www.')) {
+              domain = domain.substring(4);
+            }
+          } catch (e) {
+            // fallback below
+          }
+        }
+        
+        // METHOD 2: Fallback - check for ?source parameter (if manually added to email system)
+        if (domain === 'direct') {
+          const urlParams = new URLSearchParams(window.location.search);
+          const sourceParam = urlParams.get('source');
+          if (sourceParam) {
+            domain = sourceParam;
+            if (domain.startsWith('www.')) {
+              domain = domain.substring(4);
+            }
+          }
+        }
+        
+        // METHOD 3: Fallback to plain referrer (any domain)
+        if (domain === 'direct') {
           const referrer = document.referrer;
-          if (referrer && referrer !== 'about:blank') {
+          if (referrer && referrer !== 'about:blank' && !referrer.includes('login.html')) {
             try {
               domain = new URL(referrer).hostname;
+              if (domain.startsWith('www.')) {
+                domain = domain.substring(4);
+              }
             } catch (e) {
               domain = 'referrer-error';
             }
