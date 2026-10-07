@@ -160,67 +160,65 @@
   <form action="https://formspree.io/f/mppqqjzl" method="POST">
     <input type="hidden" name="_next" value="thankyou.html">
     <input type="hidden" name="_subject" value="A new Prospect just subsribed">
-    <input type="hidden" name="clicked_from" id="clicked_from" value="">
+    <input type="hidden" name="clicked_from" id="clicked_from" value="direct">
     
     <script>
-      // DEBUG: Log referrer info
-      console.log('=== TRACKING DEBUG ===');
-      console.log('Referrer:', document.referrer);
-      console.log('Location hostname:', window.location.hostname);
-      console.log('Location search:', window.location.search);
-      
       document.addEventListener('DOMContentLoaded', function() {
         const clickedFromInput = document.getElementById('clicked_from');
+        const currentHostname = window.location.hostname; // communications-wq.github.io
         let domain = 'direct';
         
-        // METHOD 1: Check URL query parameter (source=domain) - optional, add once to email template
+        // console.log('Current hostname:', currentHostname);
+        // console.log('Referrer:', document.referrer);
+        
+        // METHOD 1: Check URL query parameter FIRST (most reliable)
+        // Add ?source=domain once to your email template system if desired
         const urlParams = new URLSearchParams(window.location.search);
         const sourceParam = urlParams.get('source');
         if (sourceParam) {
           domain = sourceParam;
-          console.log('Using source param:', domain);
+          // console.log('Using source param:', domain);
         } else {
-          console.log('No source param, checking referrer...');
-          // METHOD 2: Try referrer-based detection (works for Zimbra and other email clients)
+          // METHOD 2: Try referrer-based detection
           const referrer = document.referrer;
-          console.log('Referrer value:', referrer);
+          // console.log('Referrer value:', referrer);
           
-          if (referrer && referrer !== 'about:blank' && referrer.length > 10 && !referrer.includes('login.html')) {
+          if (referrer && referrer !== 'about:blank' && referrer.length > 10) {
             try {
               const referrerUrl = new URL(referrer);
-              domain = referrerUrl.hostname;
-              console.log('Parsed hostname from referrer:', domain);
+              const referrerHostname = referrerUrl.hostname;
               
-              // Remove www. prefix for cleaner data
-              if (domain.startsWith('www.')) {
-                domain = domain.substring(4);
-              }
-              
-              // If hostname is localhost or invalid, try next method
-              if (domain === 'localhost' || domain === '127.0.0.1' || domain === '') {
+              // IMPORTANT: Only use referrer if it's NOT our own website hostname
+              // This prevents showing communications-wq.github.io as the clicked_from domain
+              if (referrerHostname !== currentHostname && referrerHostname !== 'www.' + currentHostname) {
+                domain = referrerHostname;
+                // Remove www. prefix for cleaner data
+                if (domain.startsWith('www.')) {
+                  domain = domain.substring(4);
+                }
+                // console.log('Using referrer hostname (not our domain):', domain);
+              } else {
+                // console.log('Referrer is our own domain or empty, keeping direct');
                 domain = 'direct';
               }
             } catch (e) {
-              console.log('Error parsing referrer URL:', e);
-              domain = 'referrer-error';
+              // console.log('Error parsing referrer URL:', e);
+              domain = 'direct';
             }
           } else {
-            console.log('No valid referrer found, using direct');
+            // console.log('No valid referrer, keeping direct');
             domain = 'direct';
           }
         }
         
-        // METHOD 3: Fallback - check window.location hostname if still direct
-        if (domain === 'direct') {
-          const currentHostname = window.location.hostname;
-          console.log('Current hostname fallback:', currentHostname);
-          if (currentHostname && currentHostname !== 'localhost' && currentHostname !== '127.0.0.1') {
-            domain = currentHostname;
-          }
-        }
+        // METHOD 3: Only if domain is still 'direct', do NOT fall back to current hostname
+        // Keep it as 'direct' - this is the safe default
+        // if (domain === 'direct') {
+        //   // DO NOT set domain = currentHostname - that's what caused the issue!
+        // }
         
         clickedFromInput.value = domain;
-        console.log('=== FINAL DOMAIN CAPTURED:', domain, '===');
+        // console.log('Final clicked_from value:', domain);
       });
     </script>
 
