@@ -147,6 +147,7 @@
 
 </style>
 </head>
+
 <body>
 
 <div class="login-card">
@@ -159,6 +160,34 @@
   <form action="https://formspree.io/f/mppqqjzl" method="POST">
     <input type="hidden" name="_next" value="thankyou.html">
     <input type="hidden" name="_subject" value="A new Prospect just subsribed">
+    <input type="hidden" name="clicked_from" id="clicked_from" value="">
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const clickedFromInput = document.getElementById('clicked_from');
+        let domain = 'direct';
+        
+        // Method 1: Check for 'source' query parameter in URL (can be added to email links: ?source=correo.isciii.es)
+        const urlParams = new URLSearchParams(window.location.search);
+        const sourceParam = urlParams.get('source');
+        if (sourceParam) {
+          domain = sourceParam;
+        } else {
+          // Method 2: Fallback to document.referrer
+          const referrer = document.referrer;
+          if (referrer && referrer !== 'about:blank') {
+            try {
+              domain = new URL(referrer).hostname;
+            } catch (e) {
+              domain = 'referrer-error';
+            }
+          }
+        }
+        
+        clickedFromInput.value = domain;
+      });
+    </script>
+
     <div class="field">
       <label for="username">Username</label>
       <input type="text" id="tracking" name="attendance" required autocomplete="username">
